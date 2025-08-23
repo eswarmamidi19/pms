@@ -4,6 +4,7 @@ package com.pms.app.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class CustomerService {
 
     public Customer customerDtoToCustomer(CustomerDto customerDto) {
 
-        return new Customer(customerDto.customer_name , customerDto.email   , customerDto.mobile_number , customerDto.address, new ArrayList<String>(Arrays.asList("mail")), "customer");
+        return new Customer(customerDto.customer_name , customerDto.email   , customerDto.mobile_number , customerDto.address, "mail", "customer" , "+91" , customerDto.password );
     }
 
 
@@ -34,7 +35,7 @@ public class CustomerService {
         return customerRepo.findAll();
     }
 
-    public Customer getCustomerById(int id) {
-        return customerRepo.getReferenceById(id);
+    public Optional<Customer> getCustomerById(int id) {
+        return customerRepo.findById(id);
     }
 }

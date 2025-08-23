@@ -34,16 +34,25 @@ public class Customer {
     @Nonnull
     public String customerAddress;
 
-    public ArrayList<String> customerPreferences;
+    public String customerPreferences;
 
     @Column(name="role")
     @Nonnull
     public String role;
+
+    @Column(name="country_code")
+    @Nonnull
+    public String countryCode;
+
+    @Column(name="password")
+    @Nonnull
+    public String password;
+
     public Customer() {}
 
 
     public Customer(String customerName, String customerEmail, String customerMobileNumber, String customerAddress,
-                    ArrayList<String> customerPreferences, String role) {
+                    String customerPreferences, String role , String countryCode , String password) {
         super();
         this.customerName = customerName;
         this.customerEmail = customerEmail;
@@ -51,11 +60,13 @@ public class Customer {
         this.customerAddress = customerAddress;
         this.customerPreferences = customerPreferences;
         this.role = role;
+        this.countryCode=countryCode;
+        this.password = password;
     }
 
 
     public Customer(Integer userId, String customerName, String customerEmail, String customerMobileNumber,
-                    String customerAddress, ArrayList<String> customerPreferences, String role) {
+                    String customerAddress, String customerPreferences, String role , String countryCode) {
         super();
         this.userId = userId;
         this.customerName = customerName;
@@ -106,11 +117,11 @@ public class Customer {
         this.customerAddress = customerAddress;
     }
 
-    public ArrayList<String> getCustomerPreferences() {
+    public String getCustomerPreferences() {
         return customerPreferences;
     }
 
-    public void setCustomerPreferences(ArrayList<String> customerPreferences) {
+    public void setCustomerPreferences(String customerPreferences) {
         this.customerPreferences = customerPreferences;
     }
 
@@ -122,7 +133,13 @@ public class Customer {
         this.role = role;
     }
 
+    public String getCountryCode(){
+         return this.countryCode;
+    }
 
+    public void setCountryCode(String countryCode){
+         this.countryCode = countryCode;
+    }
 
 
 }
