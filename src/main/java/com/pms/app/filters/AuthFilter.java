@@ -12,8 +12,8 @@ import java.io.IOException;
 
 public class AuthFilter implements Filter {
 
-    @Autowired
-    JsonParser<Customer> jsonParser;
+
+    private  final JsonParser<Customer> jsonParser = new JsonParser<Customer>();
     public void doFilter(ServletRequest servletRequest , ServletResponse servletResponse , FilterChain filterChain) throws ServletException , IOException{
         HttpServletRequest request = (HttpServletRequest)  servletRequest;
         HttpServletResponse response = (HttpServletResponse)servletResponse;
@@ -26,7 +26,11 @@ public class AuthFilter implements Filter {
         }
 
 
-        String jsonStringFromHeader = authHeader.split(" ")[1];
+        String jsonStringFromHeader = authHeader.split("##")[1];
+        System.out.println(jsonStringFromHeader);
+
+        System.out.println(authHeader);
+
         Customer customer = null;
         try {
              customer = jsonParser.StringToJson(jsonStringFromHeader , Customer.class);

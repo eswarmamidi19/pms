@@ -21,7 +21,7 @@ import com.pms.app.models.Customer;
 import com.pms.app.services.CustomerService;
 
 @RestController
-@RequestMapping("/api/pms/customers")
+@RequestMapping("/api/customers")
 public class CustomerController {
     @Autowired
     CustomerService customerService;
@@ -62,7 +62,7 @@ public class CustomerController {
 
             HttpHeaders headers = new HttpHeaders();
 
-            headers.add("Authorization" , "Bearer" + " " + customerJson);
+            headers.add("Authorization" , "Bearer" + "##" + customerJson);
 
             return new ResponseEntity<Customer>(requiredCustomer , headers , HttpStatus.OK);
         }
