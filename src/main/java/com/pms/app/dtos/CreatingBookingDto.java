@@ -21,11 +21,10 @@ public class CreatingBookingDto {
 
     public Integer serviceCost;
 
-    public CreatingBookingDto(){
-
-    }
+    public CreatingBookingDto(){}
 
     public CreatingBookingDto(String receiver_name, String receiverAddress, Integer receiver_pin, String receiver_phone_number, Integer parcel_weight_grams, String parcel_content_desc, String parcel_delivery_type, String parcel_packing_preference, LocalDateTime parcel_pickup_time, LocalDateTime parcel_drop_time, Integer serviceCost) {
+        super();
         this.receiver_name = receiver_name;
         this.receiverAddress = receiverAddress;
         this.receiver_pin = receiver_pin;
@@ -125,5 +124,22 @@ public class CreatingBookingDto {
 
     public void setServiceCost(Integer serviceCost) {
         this.serviceCost = serviceCost;
+    }
+
+    @Override
+    public String toString() {
+        return "CreatingBookingDto{" +
+                "receiver_name='" + receiver_name + '\'' +
+                ", receiverAddress='" + receiverAddress + '\'' +
+                ", receiver_pin=" + receiver_pin +
+                ", receiver_phone_number='" + receiver_phone_number + '\'' +
+                ", parcel_weight_grams=" + parcel_weight_grams +
+                ", parcel_content_desc='" + parcel_content_desc + '\'' +
+                ", parcel_delivery_type='" + parcel_delivery_type + '\'' +
+                ", parcel_packing_preference='" + parcel_packing_preference + '\'' +
+                ", parcel_pickup_time=" + parcel_pickup_time +
+                ", parcel_drop_time=" + parcel_drop_time +
+                ", serviceCost=" + serviceCost +
+                '}';
     }
 }

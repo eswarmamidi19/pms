@@ -1,0 +1,114 @@
+[
+  {
+    "v": 2,
+    "name": "pms",
+    "folders": [
+      {
+        "v": 2,
+        "name": "bookings",
+        "folders": [],
+        "requests": [
+          {
+            "v": "5",
+            "endpoint": "http://localhost:8080/api/customers/",
+            "name": "test",
+            "params": [],
+            "headers": [],
+            "method": "GET",
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
+            },
+            "preRequestScript": "",
+            "testScript": "",
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "requestVariables": []
+          }
+        ],
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "headers": []
+      }
+    ],
+    "requests": [
+      {
+        "v": "5",
+        "endpoint": "http://localhost:8080/api/customers/auth/register",
+        "name": "Post request for adding cutomer",
+        "params": [
+          {
+            "key": "id",
+            "value": "1",
+            "active": true
+          },
+          {
+            "key": "name",
+            "value": "eswar",
+            "active": true
+          }
+        ],
+        "headers": [],
+        "method": "POST",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "preRequestScript": "",
+        "testScript": "",
+        "body": {
+          "contentType": "application/json",
+          "body": "{\n  \"customer_name\": \"klein\",  \n  \"email\": \"miracleinvoker@gmail.com\",  \n  \"mobile_number\": \"7779876654\", \n  \"address\": \"City of silver\",\n  \"password\": \"Password@123\",\n  \"confirmPassword\": \"Password@123\"\n}"
+        },
+        "requestVariables": []
+      },
+      {
+        "v": "5",
+        "endpoint": "http://localhost:8080/api/customers/",
+        "name": "get all customers",
+        "params": [],
+        "headers": [],
+        "method": "GET",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "preRequestScript": "",
+        "testScript": "",
+        "body": {
+          "contentType": null,
+          "body": null
+        },
+        "requestVariables": []
+      },
+      {
+        "v": "5",
+        "endpoint": "http://localhost:8080/api/customers/auth/login",
+        "name": "Post request for login customer",
+        "params": [],
+        "headers": [],
+        "method": "POST",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "preRequestScript": "",
+        "testScript": "",
+        "body": {
+          "contentType": "application/json",
+          "body": "{\n\"user_id\" : 4,\n\"password\" : \"Password@123\"\n}"
+        },
+        "requestVariables": []
+      }
+    ],
+    "auth": {
+      "authType": "none",
+      "authActive": true
+    },
+    "headers": []
+  }
+]

@@ -1,14 +1,11 @@
 package com.pms.app.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.annotation.Nonnull;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "customer")
@@ -48,6 +45,9 @@ public class Customer {
     @Nonnull
     public String password;
 
+    @OneToMany(mappedBy = "customer" , cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonManagedReference
+    public List<Booking> bookingList = new ArrayList<Booking>();
     public Customer() {}
 
 
@@ -141,5 +141,23 @@ public class Customer {
          this.countryCode = countryCode;
     }
 
+    public List<Booking> getBookings() {
+        return bookingList;
+    }
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "userId=" + userId +
+                ", customerName='" + customerName + '\'' +
+                ", customerEmail='" + customerEmail + '\'' +
+                ", customerMobileNumber='" + customerMobileNumber + '\'' +
+                ", customerAddress='" + customerAddress + '\'' +
+                ", customerPreferences='" + customerPreferences + '\'' +
+                ", role='" + role + '\'' +
+                ", countryCode='" + countryCode + '\'' +
+                ", password='" + password + '\'' +
+                ", bookingList=" + bookingList +
+                '}';
+    }
 }
