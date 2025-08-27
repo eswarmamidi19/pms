@@ -3,6 +3,7 @@ package com.pms.app.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
@@ -45,9 +46,10 @@ public class Customer {
     @Nonnull
     public String password;
 
-    @OneToMany(mappedBy = "customer" , cascade = CascadeType.ALL,orphanRemoval = true)
-    @JsonManagedReference
-    public List<Booking> bookingList = new ArrayList<Booking>();
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonIgnore
+
+    public List<Booking> bookingList = new ArrayList<>();
     public Customer() {}
 
 
@@ -157,7 +159,6 @@ public class Customer {
                 ", role='" + role + '\'' +
                 ", countryCode='" + countryCode + '\'' +
                 ", password='" + password + '\'' +
-                ", bookingList=" + bookingList +
                 '}';
     }
 }

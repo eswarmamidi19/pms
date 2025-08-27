@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.pms.app.utils.CryptoUtil;
 import com.pms.app.utils.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +29,7 @@ public class CustomerController {
     CustomerService customerService;
 
     @Autowired
-    JsonParser<Customer> objectJsontoString;
+    JsonParser<Map<String,Object>> objectJsontoString;
 
     @GetMapping("/")
     public List<Customer> getAllCustomers() {
@@ -51,24 +53,37 @@ public class CustomerController {
         }
 
         Customer requiredCustomer = potentialCustomer.get();
-        if(requiredCustomer.password.equals(loginRequestBody.get("password")+"")){
+        System.out.println(requiredCustomer);
+        if(requiredCustomer.password.equals(loginRequestBody.get("password"))){
             String customerJson = "";
-            try{
-                 customerJson = objectJsontoString.convertToJsonString(requiredCustomer);
-            }catch(JsonProcessingException ex){
-                System.out.println("Error while Parsing json");
+            String encrypted = "";
+            //String decrypted = "";
+
+            Map<String, Object> map = Map.ofEntries(
+                    Map.entry("user_id" , requiredCustomer.userId),
+                    Map.entry("name", requiredCustomer.customerName),
+                    Map.entry("email", requiredCustomer.customerEmail),
+                    Map.entry("country", requiredCustomer.customerAddress),
+                    Map.entry("role", requiredCustomer.role)
+
+            );
+            try {
+                String json = objectJsontoString.convertToJsonString(map);
+                System.out.println(json);
+                encrypted = CryptoUtil.encrypt(json);
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Authorization" , "Bearer" + "##" + encrypted);
+                return new ResponseEntity<Customer>(requiredCustomer , headers , HttpStatus.OK);
             }
+           catch (JsonProcessingException e){
+                e.printStackTrace();
+           }
 
 
-            HttpHeaders headers = new HttpHeaders();
+            return new ResponseEntity<Customer>(HttpStatus.BAD_REQUEST);
 
-            headers.add("Authorization" , "Bearer" + "##" + customerJson);
 
-            return new ResponseEntity<Customer>(requiredCustomer , headers , HttpStatus.OK);
         }
-
-
-
         return new ResponseEntity<Customer>(HttpStatus.BAD_REQUEST);
     }
 

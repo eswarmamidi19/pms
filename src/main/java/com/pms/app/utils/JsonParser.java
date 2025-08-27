@@ -1,6 +1,7 @@
 package com.pms.app.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,10 @@ public class JsonParser<T> {
           return obj;
     }
 
+    public T StringToJsonByTypeRef(String jsonString , TypeReference<T> typeRef) throws JsonProcessingException{
+        T obj = objectMapper.readValue(jsonString , typeRef);
+        return obj;
+    }
     public void getErrorResponse (HttpServletResponse response , int status , String message) throws  JsonProcessingException , IOException {
            response.setStatus(status);
            response.setContentType("application/json");

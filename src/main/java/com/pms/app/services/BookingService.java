@@ -5,11 +5,11 @@ import com.pms.app.models.Booking;
 import com.pms.app.models.Customer;
 import com.pms.app.repositories.BookingRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 
 @Service
 public class BookingService {
