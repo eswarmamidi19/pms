@@ -25,8 +25,18 @@ public class AuthFilter implements Filter {
 
     public void doFilter(ServletRequest servletRequest , ServletResponse servletResponse , FilterChain filterChain) throws ServletException , IOException{
         HttpServletRequest request = (HttpServletRequest)  servletRequest;
-        HttpServletResponse response = (HttpServletResponse)servletResponse;
+         HttpServletResponse response = (HttpServletResponse)servletResponse;
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept, Origin, X-Requested-With");
+        response.setHeader("Access-Control-Expose-Headers", "Authorization");
 
+        // For preflight requests, just return OK
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            return;
+        }
         String authHeader = request.getHeader("Authorization");
 
         if(authHeader==null){

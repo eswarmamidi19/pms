@@ -33,11 +33,11 @@ public class CustomerController {
 
     @GetMapping("/")
     public List<Customer> getAllCustomers() {
+
         return  customerService.getAllCustomers() ;
     }
 
     @PostMapping("/auth/register")
-
     public Customer createNewCustomer(@RequestBody CustomerDto customerDto) {
         System.out.println(customerDto);
         return customerService.addCustomer(customerDto);
@@ -81,8 +81,6 @@ public class CustomerController {
 
 
             return new ResponseEntity<Customer>(HttpStatus.BAD_REQUEST);
-
-
         }
         return new ResponseEntity<Customer>(HttpStatus.BAD_REQUEST);
     }
