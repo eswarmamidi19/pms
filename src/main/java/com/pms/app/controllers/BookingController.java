@@ -86,6 +86,32 @@ public class BookingController {
         System.out.println(loggedInCustomer);
         return bookingService.addBooking(creatingBookingDto, loggedInCustomer);
     }
+
+    @GetMapping("/all_bookings")
+    public ResponseEntity<List<Booking>> getAllBookings(HttpServletRequest request){
+        @SuppressWarnings("unchecked")
+        Map<String, Object> loggedInCustomerMap = (Map<String, Object>) request.getAttribute("loggedInUser");
+        Object userIdObj = loggedInCustomerMap.get("user_id");
+        int userId;
+        if (userIdObj instanceof Integer) {
+            userId = (Integer) userIdObj;
+        } else if (userIdObj instanceof String) {
+            userId = Integer.parseInt((String) userIdObj);
+        } else {
+            return new ResponseEntity<List<Booking>>(HttpStatus.NOT_FOUND);
+        }
+        Optional<Customer> potentialCustomer = customerService.getCustomerById(userId);
+        if (potentialCustomer.isEmpty()) {
+            return new ResponseEntity<List<Booking>>(HttpStatus.NOT_FOUND);
+        }
+        Customer loggedInCustomer = potentialCustomer.get();
+        if (!loggedInCustomer.role.equalsIgnoreCase("ADMIN")){
+            return new ResponseEntity<List<Booking>>(HttpStatus.FORBIDDEN);
+        }
+
+
+        return ResponseEntity.ok(bookingService.allBooking());
+    }
     // TODO : 4
     @PostMapping("/admin/update-status/{id}")
     public ResponseEntity<Booking> updatingBookingStatusAdmin(HttpServletRequest request,@PathVariable int id , @RequestBody  Map<String , String> userStatus) {
@@ -109,12 +135,13 @@ public class BookingController {
             return new ResponseEntity<Booking>(HttpStatus.FORBIDDEN);
         }
         // TODO :  update user
-        Booking updatedBooking =  bookingService.updateBookingStatus(id, userStatus.get("user_id"));
+        Booking updatedBooking =  bookingService.updateBookingStatus(id, userStatus.get("user_status"));
         if (updatedBooking==null) {
             return new ResponseEntity<Booking>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(updatedBooking);
     }
+
 
     @GetMapping("/status/{id}")
     public ResponseEntity<Map<String , String>> getStatusByUser(HttpServletRequest request , @PathVariable int id){
